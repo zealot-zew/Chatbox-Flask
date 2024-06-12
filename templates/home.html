@@ -1,0 +1,28 @@
+{% extends 'layout.html' %} {% block title %} Home {% endblock %} {% block
+content %}
+
+<div class="container">
+  <div class="wrapper">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="feature-box">
+          <h1>ChatBox</h1>
+          <p>
+            Step into our chatbox and let the conversations begin! Whether
+            you're seeking lively discussions or intimate exchanges, you can
+            create your own chatroom or dive into existing ones. Join us and
+            explore the world of endless connections!
+          </p>
+          <a href="chatroom">
+            <button type="button" class="btn btn-primary custom-button">Join Chatroom</button>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <img src="/static/main-logo.png" class="feature-img" />
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

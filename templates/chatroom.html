@@ -1,0 +1,116 @@
+{% extends 'layout.html' %} {% block title %} chatroom {% endblock %} {% block
+content %}
+{% if not room %}
+    <div class="container">
+        <div class="wrapper-profile">
+            <div class="row">
+                <div class="col-md-6">
+                        <h1>Join Room</h1>
+                        <form action="/chatroom" method="post">
+                            <div class="input-group mb-3">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Enter Room Code"
+                                  aria-label="code"
+                                  aria-describedby="basic-addon1"
+                                  name="code"
+                                  autocomplete="off"
+                                />
+                            </div>
+                              <div class="text-center">
+                                <button class="btn btn-primary" type="submit" name="action" value="join">Join</button>
+                              </div>
+                        </form>
+                </div>
+                <div class="col-md-6 col-md-6-with-line">
+                    <div class="vertical-line">
+                        <h1>Create Room</h1>
+                        <form action="/chatroom" method="post">
+                              <div class="text-center">
+                                <button class="btn btn-primary" type="submit" name="action" value="create">Create</button>
+                              </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+
+<!--create a chatbox over here -->
+<div class="header" style="display: flex; flex-direction: row;">
+    <h3> Room: {{room}}</h3>
+    <a href="chatroom">
+        <h6>
+            Click here to Exit room
+        </h6>
+    </a>
+</div>
+<div class="container-chatbox">
+    <div class="message-box">
+        <div class="messages" id="messages">
+            <!-- Messages will go here -->
+        </div>
+        <div class="inputs">
+            <input
+                type="text"
+                rows="3"
+                placeholder="Messages"
+                name="message"
+                id="message"
+                autocomplete="off"
+                autofocus
+            />
+            <button type="button" name="send" id="send-btn" onclick="sendMessage()">send</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+
+    const messages = document.getElementById("messages");
+
+    const createMessage = (name, msg) => {
+        const content = `
+        <div class='text'>
+            <span><strong>${name}</strong>: ${msg}</span>
+            <span class="muted">${new Date().toLocaleString()}</span>
+        </div>
+        `;
+        messages.innerHTML += content;
+    };
+
+    socket.on("message", (data) => {
+        createMessage(data.name, data.message);
+    });
+
+    const sendMessage = () => {
+        const messageInput = document.getElementById("message");
+        const message = messageInput.value;
+        if (message.trim()) {
+            socket.emit("send_message", {"message": message});
+            messageInput.value = '';
+        }
+    };
+
+    socket.on('connect', () => {
+        console.log('Connected to the server.');
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Disconnected from the server.');
+    });
+
+    //if enter key is pressed trigger sendmessage
+    document.getElementById('message').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+</script>
+
+{% endif %}
+{% endblock %}
