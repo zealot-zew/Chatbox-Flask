@@ -141,7 +141,7 @@ def disconnect():
 @socketio.on('send_message')
 def handle_send_message(data):
     room = session.get('room')
-    name = session.get('username')
+    name = session.get('username') 
     message = data.get('message')
     if room and name and message:
         send({"name": name, "message": message}, to=room)
