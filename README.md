@@ -56,10 +56,10 @@ Whether you're casually chatting or hosting group conversations, Chatbox offers 
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/chatbox-webapp.git
+git clone https://github.com/zealot-zew/Chatbox-Flask.git
 
 # Navigate into the directory
-cd chatbox-webapp
+cd Chatbox-Flask
 
 # Install dependencies (create a virtualenv if needed)
 pip install -r requirements.txt
