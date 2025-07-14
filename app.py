@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request,session,flash, Blueprint,url_for
 from flask_socketio import join_room, leave_room, send, SocketIO
 from flask_session import Session
+import os
 
 import random
 from string import ascii_uppercase
@@ -145,8 +146,9 @@ def handle_send_message(data):
     message = data.get('message')
     if room and name and message:
         send({"name": name, "message": message}, to=room)
-        
+
 
 
 if __name__ == "__main__":
-    socketio.run(app,debug=True)
+    port = int(os.environ.get("PORT", 5000))  # default to 5000 if PORT is not set
+    socketio.run(app, host='0.0.0.0', port=port)
