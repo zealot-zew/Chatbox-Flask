@@ -1,29 +1,28 @@
-{% extends 'layout.html' %} {% block title %} Profile {% endblock %} 
-{% block content %} 
-{% if username %}
+{% extends 'layout.html' %} {% block title %} Profile {% endblock %} {% block
+content %} {% if username %}
 <!-- if session name exists we need to show the profile and logout button -->
-  <div class="container">
-    <div class="wrapper-profile">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="feature-box-profile">
-            <img src="/static/pfp.png" class="feature-img-profile"/>
+<div class="container">
+  <div class="wrapper-profile">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="feature-box-profile">
+          <img src="/static/pfp.png" class="feature-img-profile" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h1>{{username}}</h1>
+      </div>
+      <div class="col-md-5 col-md-5-with-line">
+        <div class="vertical-line"></div>
+        <form action="/" method="post">
+          <div class="button-profile">
+            <button class="btn btn-primary" type="submit">logout</button>
           </div>
-        </div>
-        <div class="col-md-4">
-          <h1>{{username}}</h1>
-        </div>
-        <div class="col-md-5 col-md-5-with-line">
-          <div class="vertical-line"></div>
-          <form action="/" method="post">
-            <div class="button-profile">
-              <button class="btn btn-primary" type="submit">logout</button>
-            </div>
-          </form>
-        </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
 {% else %}
 <!-- if session name doesnt exists we need to ask for name via form and submit via post -->
 <form action="/profile" method="post">
@@ -42,20 +41,22 @@
         />
       </div>
       <div class="text-center">
-        <button class="btn btn-primary" type="submit" id="enter-btn">Enter</button>
+        <button class="btn btn-primary" type="submit" id="enter-btn">
+          Enter
+        </button>
       </div>
     </div>
   </div>
 </form>
 
-
 <script>
   //it works lmao idk how
-  document.getElementById('enter-btn').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                
-            }
-        });
+  document
+    .getElementById("enter-btn")
+    .addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+      }
+    });
 </script>
 
 {% endif %} {% endblock %}
